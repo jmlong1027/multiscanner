@@ -8,6 +8,8 @@ python:
 install:
   - yes "" | sudo -HE ./install.sh
   - pip install -r requirements.txt
+  - pip install pylint
   - python multiscanner.py init
 script:
   - pytest
+  - pylint
