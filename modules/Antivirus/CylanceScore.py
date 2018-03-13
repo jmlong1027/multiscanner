@@ -21,7 +21,7 @@ DEFAULTCONF = {
 
 def ping():
     try:
-        # If Cylance service runs locally on port 9002 by default, change if configured differently
+        # Cylance service runs locally on port 9002 by default, change if configured differently
         status = "(echo >/dev/tcp/127.0.0.1/9002) &>/dev/null && echo '0' || echo '1'"
         return bool(subprocess.check_output([status], shell=True))
     except:
