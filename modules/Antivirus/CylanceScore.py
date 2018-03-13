@@ -42,7 +42,7 @@ def scan(filelist, conf=DEFAULTCONF):
                 output = output.split("\n", 2)[2]
                 ## Splitting output at funky characaters
                 output = re.split('---- | ----|{|}|,|\n', output)
-                ## There are emptying strings in the list, removing....
+                ## There are empty strings in the list, removing....
                 output = [i for i in output if i != '']
                 ## Cleaning up leading whitespaces
                 output = [x.strip(' ') for x in output]
