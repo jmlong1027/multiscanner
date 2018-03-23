@@ -14,10 +14,16 @@ NAME = "Cylance"
 SCORE = "/opt/infinity/bin/mono /opt/infinity/bin/InfinityDaemonClient localhost:9002 p ScoreFile "
 
 DEFAULTCONF = {
-    "ENABLED": True,
+    "ENABLED": False,
     "score": SCORE
 }
 
+def check(conf=DEFAULTCONF):
+    if not conf['ENABLED']:
+        return False
+    if not ping():
+        return False
+    return True
 
 def ping():
     try:
