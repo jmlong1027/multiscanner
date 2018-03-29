@@ -11,7 +11,7 @@ __license__ = "MPL 2.0"
 TYPE = "Antivirus"
 NAME = "Cylance"
 
-SCORE = "/opt/infinity/bin/mono /opt/infinity/bin/InfinityDaemonClient localhost:9002 p ScoreFile "
+SCORE = "/opt/infinity/bin/mono /opt/infinity/bin/InfinityDaemonClient localhost:9002 p ScoreFile"
 
 DEFAULTCONF = {
     "ENABLED": False,
@@ -29,7 +29,7 @@ def ping():
     try:
         # Cylance service runs locally on port 9002 by default, change if configured differently
         status = "(echo >/dev/tcp/127.0.0.1/9002) &>/dev/null && echo '0' || echo '1'"
-        return bool(subprocess.check_output([status], shell=True))
+        return bool(subprocess.check_output([status], shell=True, executable='/bin/bash'))
     except:
         raise
 
@@ -40,7 +40,7 @@ def scan(filelist, conf=DEFAULTCONF):
     if ping():
         try:
             for f in filelist:
-                scoreFile = conf["score"] + f
+                scoreFile = conf["score"] + " "+ f
                 output = subprocess.check_output([scoreFile], shell=True)
 
                 ## Cleaning up the output ##
@@ -55,9 +55,9 @@ def scan(filelist, conf=DEFAULTCONF):
                 ## End of cleaning ##
 
                 # Add list to result
-                # results.append(f,output)
+                # results.append((f,output))
                 # Add score only to result
-                results.append(f, output[9])
+                results.append((f, output[9]))
 
         except:
             raise
